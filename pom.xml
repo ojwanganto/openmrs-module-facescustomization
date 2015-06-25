@@ -4,7 +4,7 @@
 
 	<groupId>org.openmrs.module</groupId>
 	<artifactId>facescustomization</artifactId>
-	<version>1.0-SNAPSHOT</version>
+	<version>0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>Faces Customization Module</name>
 	<description>A module that has faces custom routine procedures, reports and more</description>
@@ -17,8 +17,8 @@
 	</developers>
 	
 	<organization>
-		<name>OpenMRS</name>
-		<url>http://openmrs.org</url>
+		<name>Kemri-Faces</name>
+		<url>www.kemri-ucsf.org</url>
 	</organization>
 
 	<scm>
@@ -33,25 +33,70 @@
 	</modules>
 	
 	<properties>
-		<openMRSVersion>1.8.2</openMRSVersion>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <calculationVersion>1.0</calculationVersion>
+        <reportingVersion>0.7.5</reportingVersion>
+        <serializationVersion>0.2.7</serializationVersion>
+        <htmlWidgetsVersion>1.6.0</htmlWidgetsVersion>
+        <logicVersion>0.5.1</logicVersion>
+        <openCSVVersion>2.3</openCSVVersion>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <MODULE_ID>${project.parent.artifactId}</MODULE_ID>
+        <MODULE_NAME>${project.parent.name}</MODULE_NAME>
+        <MODULE_VERSION>${project.parent.version}</MODULE_VERSION>
+        <MODULE_PACKAGE>${project.parent.groupId}.${project.parent.artifactId}</MODULE_PACKAGE>
+        <openMRSVersion>1.8.0</openMRSVersion>
+        <customArgLineForTesting />
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
 	<dependencyManagement>
 		<dependencies>
-		
-			<!--
-			Libraries to add as dependencies with compile or runtime scope:
-			Find matching dependencies in the maven central repository.
+			<!-- External dependencies -->
+
 			<dependency>
-				<groupId>org.other.library</groupId>
-				<artifactId>library-name</artifactId>
-				<version>library.version</version>
-				<scope>compile</scope>
+				<groupId>org.openmrs.module</groupId>
+				<artifactId>reporting-api</artifactId>
+				<version>${reportingVersion}</version>
+				<scope>provided</scope>
 			</dependency>
-			-->
-			
-			
+
+			<dependency>
+				<groupId>org.openmrs.module</groupId>
+				<artifactId>logic-api</artifactId>
+				<version>${logicVersion}</version>
+				<type>jar</type>
+				<scope>provided</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>org.openmrs.module</groupId>
+				<artifactId>serialization.xstream-api</artifactId>
+				<version>${serializationVersion}</version>
+				<scope>provided</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>org.openmrs.module</groupId>
+				<artifactId>htmlwidgets</artifactId>
+				<version>${htmlWidgetsVersion}</version>
+				<scope>provided</scope>
+			</dependency>
+
+            <dependency>
+                <groupId>org.openmrs.module</groupId>
+                <artifactId>calculation-api</artifactId>
+                <version>${calculationVersion}</version>
+                <type>jar</type>
+                <scope>provided</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>net.sf.opencsv</groupId>
+                <artifactId>opencsv</artifactId>
+                <version>${openCSVVersion}</version>
+            </dependency>
+
+            <!-- End External dependencies -->
 
 			<!-- Begin OpenMRS core -->
 			
@@ -111,17 +156,56 @@
 						<source>1.6</source>
 					</configuration>
 				</plugin>
-				<plugin>
-					<groupId>org.openmrs.maven.plugins</groupId>
-					<artifactId>maven-openmrs-plugin</artifactId>
-					<version>1.0.1</version>
-				</plugin>
-				<plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-release-plugin</artifactId>
+                    <version>2.3.2</version>
+                    <configuration>
+                        <autoVersionSubmodules>true</autoVersionSubmodules>
+                        <tagNameFormat>@{project.version}</tagNameFormat>
+                    </configuration>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.openmrs.maven.plugins</groupId>
+                    <artifactId>maven-openmrs-plugin</artifactId>
+                    <version>1.0.1</version>
+                    <extensions>true</extensions>
+                    <executions>
+                        <execution>
+                            <id>init</id>
+                            <phase>initialize</phase>
+                            <goals>
+                                <goal>initialize-module</goal>
+                            </goals>
+                        </execution>
+                        <execution>
+                            <id>pack</id>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>package-module</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-dependency-plugin</artifactId>
 					<version>2.4</version>
 				</plugin>
-			</plugins>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>2.5</version>
+                    <configuration>
+                        <argLine>-Duser.language=en -Duser.region=US -Xmx512m -XX:MaxPermSize=512m ${customArgLineForTesting}</argLine>
+                    </configuration>
+                </plugin>
+
+            </plugins>
 		</pluginManagement>
 	</build>
 
