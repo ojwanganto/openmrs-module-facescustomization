@@ -16,8 +16,11 @@ package org.openmrs.module.facescustomization.extension.html;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.openmrs.api.context.Context;
 import org.openmrs.module.Extension;
+import org.openmrs.module.reporting.ReportingConstants;
 import org.openmrs.module.web.extension.AdministrationSectionExt;
+import org.openmrs.util.PrivilegeConstants;
 
 /**
  * This class defines the links that will appear on the administration page under the
@@ -47,5 +50,29 @@ public class AdminList extends AdministrationSectionExt {
 		map.put("/module/facescustomization/manage.form", "facescustomization.manage");
 		return map;
 	}
+   /* public Map<String, String> getLinks() {
+        Map<String, String> map = new LinkedHashMap<String, String>();
+
+        if (Context.hasPrivilege(ReportingConstants.PRIV_VIEW_REPORTS)) {
+            map.put("module/amrsreports/queuedReport.list", "Manage AMRS Reports");
+        }
+
+        if (Context.hasPrivilege(PrivilegeConstants.VIEW_LOCATIONS)) {
+            map.put("module/amrsreports/cccNumbers.list", "Manage CCC Numbers");
+            map.put("module/amrsreports/facility.list", "Manage MOH Facilities");
+
+            if (Context.hasPrivilege(PrivilegeConstants.VIEW_USERS)) {
+                map.put("module/amrsreports/facilityPrivileges.form", "Manage User/Facility Privileges");
+            }
+
+            map.put("/module/amrsreports/cohortCounts.list", "View Cohort Counts");
+        }
+
+        if (Context.hasPrivilege(PrivilegeConstants.VIEW_GLOBAL_PROPERTIES)) {
+            map.put("module/amrsreports/settings.form", "Settings");
+        }
+
+        return map;
+    }*/
 	
 }

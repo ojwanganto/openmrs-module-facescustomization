@@ -1,0 +1,27 @@
+/**
+ * AMRS Reports common css
+ */
+
+.tblformat tr:nth-child(odd) td {
+    background-color: #eee;
+}
+
+.tblformat tr:nth-child(odd) th {
+    background-color: #ddd;
+}
+
+.tblformat tr:nth-child(even) td {
+    background-color: #d3d3d3;
+}
+
+.tblformat tr:nth-child(even) th {
+    background-color: #bbb;
+}
+
+.running { font-style: italic; }
+
+.hidden { display: none; }
+
+.visualPadding { margin: 1em; }
+
+.newline { clear: both; display: block; }

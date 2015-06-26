@@ -24,16 +24,15 @@
 	<bean parent="serviceContext">
 		<property name="moduleService">
 			<list>
-				<value>${project.parent.groupId}.${project.parent.artifactId}.api.FacesService</value>
-				<bean
-					class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+				<value>org.openmrs.module.facescustomization.service.FacesService</value>
+				<bean class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
 					<property name="transactionManager">
 						<ref bean="transactionManager" />
 					</property>
 					<property name="target">
-						<bean class="${project.parent.groupId}.${project.parent.artifactId}.api.impl.FacesServiceImpl">
+						<bean class="org.openmrs.module.facescustomization.service.impl.FacesServiceImpl">
 							<property name="dao">
-								<bean class="${project.parent.groupId}.${project.parent.artifactId}.api.db.hibernate.HibernateFacesDAO">
+								<bean class="${project.parent.groupId}.${project.parent.artifactId}.db.hibernate.HibernateFacesDAO">
 									<property name="sessionFactory">
 										<ref bean="sessionFactory" />
 									</property>
@@ -51,5 +50,54 @@
 			</list>
 		</property>
 	</bean>
-	
+
+    <bean parent="serviceContext">
+        <property name="moduleService">
+            <list>
+                <value>org.openmrs.module.facescustomization.service.MohCoreService</value>
+                <bean class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+                    <property name="transactionManager" ref="transactionManager"/>
+                    <property name="target">
+                        <bean class="org.openmrs.module.facescustomization.service.impl.MohCoreServiceImpl">
+                            <property name="coreDAO">
+                                <bean class="org.openmrs.module.facescustomization.db.hibernate.MohHibernateCoreDAO">
+                                    <property name="sessionFactory" ref="sessionFactory"/>
+                                </bean>
+                            </property>
+                        </bean>
+                    </property>
+                    <property name="preInterceptors" ref="serviceInterceptors"/>
+                    <property name="transactionAttributeSource">
+                        <bean class="org.springframework.transaction.annotation.AnnotationTransactionAttributeSource" />
+                    </property>
+                </bean>
+            </list>
+        </property>
+    </bean>
+
+    <bean parent="serviceContext">
+        <property name="moduleService">
+            <list>
+                <value>org.openmrs.module.facescustomization.service.QueuedReportService</value>
+                <bean class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+                    <property name="transactionManager" ref="transactionManager"/>
+                    <property name="target">
+                        <bean class="org.openmrs.module.facescustomization.service.impl.QueuedReportServiceImpl">
+                            <property name="dao">
+                                <bean class="org.openmrs.module.facescustomization.db.hibernate.HibernateQueuedReportDAO">
+                                    <property name="sessionFactory" ref="sessionFactory"/>
+                                </bean>
+                            </property>
+                        </bean>
+                    </property>
+                    <property name="preInterceptors" ref="serviceInterceptors"/>
+                    <property name="transactionAttributeSource">
+                        <bean class="org.springframework.transaction.annotation.AnnotationTransactionAttributeSource" />
+                    </property>
+                </bean>
+            </list>
+        </property>
+    </bean>
+
+
 </beans>

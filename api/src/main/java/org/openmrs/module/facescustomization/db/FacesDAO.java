@@ -11,21 +11,16 @@
  *
  * Copyright (C) OpenMRS, LLC.  All Rights Reserved.
  */
-package org.openmrs.module.facescustomization.api;
+package org.openmrs.module.facescustomization.db;
 
-import static org.junit.Assert.*;
-import org.junit.Test;
-import org.openmrs.api.context.Context;
 import org.openmrs.module.facescustomization.service.FacesService;
-import org.openmrs.test.BaseModuleContextSensitiveTest;
 
 /**
- * Tests {@link ${FacesService}}.
+ *  Database methods for {@link FacesService}.
  */
-public class  FacesServiceTest extends BaseModuleContextSensitiveTest {
+public interface FacesDAO {
 	
-	@Test
-	public void shouldSetupContext() {
-		assertNotNull(Context.getService(FacesService.class));
-	}
+	/*
+	 * Add DAO methods here
+	 */
 }
