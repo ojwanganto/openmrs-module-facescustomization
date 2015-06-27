@@ -37,8 +37,8 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequestMapping("**/queuedAMRSReports.portlet")
-public class QueuedAMRSReportsPortletController extends PortletController {
+@RequestMapping("**/queuedReports.portlet")
+public class QueuedReportsPortletController extends PortletController {
 
 	/**
 	 * @see org.openmrs.web.controller.PortletController#populateModel(javax.servlet.http.HttpServletRequest,
