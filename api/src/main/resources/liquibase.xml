@@ -4,16 +4,16 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
-    <changeSet id="amrsreports-2013-03-11" author="jkeiper">
+    <changeSet id="facescustomization-2013-03-11" author="aojwang">
         <preConditions onFail="MARK_RAN">
             <not>
-                <tableExists tableName="amrsreports_queued_report"/>
+                <tableExists tableName="facescustomization_queued_report"/>
             </not>
         </preConditions>
         <comment>
-            Creating the amrsreports_queued_report table
+            Creating the facescustomization_queued_report table
         </comment>
-        <createTable tableName="amrsreports_queued_report">
+        <createTable tableName="facescustomization_queued_report">
             <column name="queued_report_id" type="int" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
@@ -38,59 +38,59 @@
             </column>
         </createTable>
 
-        <createIndex tableName="amrsreports_queued_report" indexName="status">
+        <createIndex tableName="facescustomization_queued_report" indexName="status">
             <column name="status" />
         </createIndex>
 
-        <createIndex tableName="amrsreports_queued_report" indexName="date_scheduled">
+        <createIndex tableName="facescustomization_queued_report" indexName="date_scheduled">
             <column name="date_scheduled" />
         </createIndex>
 
-        <addForeignKeyConstraint constraintName="amrsreports_queued_report_facility"
-                                 baseTableName="amrsreports_queued_report" baseColumnNames="facility_id"
-                                 referencedTableName="amrsreports_facility" referencedColumnNames="facility_id"
+        <addForeignKeyConstraint constraintName="facescustomization_queued_report_facility"
+                                 baseTableName="facescustomization_queued_report" baseColumnNames="facility_id"
+                                 referencedTableName="location" referencedColumnNames="location_id"
                 />
 
     </changeSet>
 
-    <changeSet id="amrsreports-2013-03-26-a" author="jkeiper">
+    <changeSet id="facescustomization-2013-03-26-a" author="aojwang">
         <preConditions onFail="MARK_RAN">
             <not>
-                <columnExists tableName="amrsreports_queued_report" columnName="csv_file_location"/>
+                <columnExists tableName="facescustomization_queued_report" columnName="csv_file_location"/>
             </not>
         </preConditions>
         <comment>
-            Adding csv_file_location to the amrsreports_queued_report table
+            Adding csv_file_location to the facescustomization_queued_report table
         </comment>
-        <addColumn tableName="amrsreports_queued_report">
+        <addColumn tableName="facescustomization_queued_report">
             <column name="csv_file_location" type="varchar(512)"/>
         </addColumn>
     </changeSet>
 
-    <changeSet id="amrsreports-2013-03-26-b" author="jkeiper">
+    <changeSet id="facescustomization-2013-03-26-b" author="aojwang">
         <preConditions onFail="MARK_RAN">
             <not>
-                <columnExists tableName="amrsreports_queued_report" columnName="xls_file_location"/>
+                <columnExists tableName="facescustomization_queued_report" columnName="xls_file_location"/>
             </not>
         </preConditions>
         <comment>
-            Adding xls_file_location to the amrsreports_queued_report table
+            Adding xls_file_location to the facescustomization_queued_report table
         </comment>
-        <addColumn tableName="amrsreports_queued_report">
+        <addColumn tableName="facescustomization_queued_report">
             <column name="xls_file_location" type="varchar(512)"/>
         </addColumn>
     </changeSet>
 
-    <changeSet id="amrsreports-2013-03-27a" author="aojwang">
+    <changeSet id="facescustomization-2013-03-27a" author="aojwang">
         <preConditions onFail="MARK_RAN">
             <not>
-                <columnExists tableName="amrsreports_queued_report" columnName="repeat_interval"/>
+                <columnExists tableName="facescustomization_queued_report" columnName="repeat_interval"/>
             </not>
         </preConditions>
         <comment>
-            Adding repeat_interval to the amrsreports_queued_report table
+            Adding repeat_interval to the facescustomization_queued_report table
         </comment>
-        <addColumn tableName="amrsreports_queued_report">
+        <addColumn tableName="facescustomization_queued_report">
             <column name="repeat_interval" type="int(11)"/>
         </addColumn>
     </changeSet>

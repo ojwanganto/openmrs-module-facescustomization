@@ -35,6 +35,50 @@
 				
 	</mappingFiles>
 
+
+	<!-- Required Global Properties -->
+
+	<globalProperty>
+		<property>${project.parent.artifactId}.file_dir</property>
+		<defaultValue>${project.parent.artifactId}</defaultValue>
+		<description>Directory for storing rendered reports</description>
+	</globalProperty>
+    <globalProperty>
+        <property>${project.parent.artifactId}.cccIdentifierType</property>
+        <defaultValue></defaultValue>
+        <description>Identifier type for CCC Number identifiers</description>
+    </globalProperty>
+
+    <!-- /Required Global Properties -->
+	
+	<dwr>
+        <allow>
+            <create creator="new" javascript="DWRFacesCustomizationService">
+                <param name="class" value="${project.parent.groupId}.${project.parent.artifactId}.web.dwr.DWRFacesCustomizationService"/>
+                <include method="purgeSyncDuplicates"/>
+
+            </create>
+            <convert match="org.openmrs.Location" converter="bean" />
+            <convert match="org.openmrs.User" converter="bean"/>
+        </allow>
+
+        <signatures>
+            <![CDATA[
+			import ${project.parent.groupId}.${project.parent.artifactId}.web.dwr.DWRFacesCustomizationService;
+			DWRFacesCustomizationService.purgeSyncDuplicates();
+			]]>
+        </signatures>
+    </dwr>
+	
+	<!-- Servlets -->
+	<!-- Accessed through the url /pageContext()/moduleServlet/<moduleId>/<servlet-name> 
+	<servlet>
+		<servlet-name>formDownload</servlet-name>
+		<servlet-class>${project.parent.groupId}.${project.parent.artifactId}.web.FormDownloadServlet</servlet-class>
+	</servlet>
+	-->
+	<!-- /Servlets -->
+	
 	<!-- Internationalization -->
 	<!-- All message codes should start with ${project.parent.artifactId}. -->
 	<messages>

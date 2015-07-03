@@ -13,8 +13,11 @@
  */
 package org.openmrs.module.facescustomization.service;
 
+import org.openmrs.Location;
 import org.openmrs.api.OpenmrsService;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Map;
 
 /**
  * This service exposes module's core functionality. It is a Spring managed bean which is configured in moduleApplicationContext.xml.
@@ -29,8 +32,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public interface FacesService extends OpenmrsService {
      
-	/*
-	 * Add service methods here
-	 * 
-	 */
+	public String removeSyncDuplicates();
+    public Map<Location, String> checkSyncStatus();
 }

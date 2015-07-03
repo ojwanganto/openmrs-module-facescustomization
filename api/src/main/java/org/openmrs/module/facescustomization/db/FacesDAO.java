@@ -13,14 +13,16 @@
  */
 package org.openmrs.module.facescustomization.db;
 
+import org.openmrs.Location;
 import org.openmrs.module.facescustomization.service.FacesService;
+
+import java.util.Map;
 
 /**
  *  Database methods for {@link FacesService}.
  */
 public interface FacesDAO {
-	
-	/*
-	 * Add DAO methods here
-	 */
+
+    public String removeSyncDuplicates();
+    public Map<Location, String> checkSyncStatus();
 }

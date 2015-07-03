@@ -13,11 +13,14 @@
  */
 package org.openmrs.module.facescustomization.service.impl;
 
+import org.openmrs.Location;
 import org.openmrs.api.impl.BaseOpenmrsService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.module.facescustomization.service.FacesService;
 import org.openmrs.module.facescustomization.db.FacesDAO;
+
+import java.util.Map;
 
 /**
  * It is a default implementation of {@link FacesService}.
@@ -40,5 +43,15 @@ public class FacesServiceImpl extends BaseOpenmrsService implements FacesService
      */
     public FacesDAO getDao() {
 	    return dao;
+    }
+
+    @Override
+    public String removeSyncDuplicates() {
+        return dao.removeSyncDuplicates();
+    }
+
+    @Override
+    public Map<Location, String> checkSyncStatus() {
+        return dao.checkSyncStatus();
     }
 }
