@@ -1,7 +1,7 @@
 <%@ include file="/WEB-INF/template/include.jsp" %>
 <%@ include file="/WEB-INF/template/header.jsp" %>
 
-<openmrs:require privilege="View Reports" otherwise="/login.htm" redirect="/module/amrsreports/queuedReport.list"/>
+<openmrs:require privilege="View Reports" otherwise="/login.htm" redirect="/module/facescustomization/queuedReport.list"/>
 
 <script type="text/javascript">
     $j(document).ready(function(){
@@ -56,7 +56,7 @@
 
 </script>
 
-<%@ include file="localHeader.jsp" %>
+<%@ include file="template/localHeader.jsp" %>
 
 <a href="queuedReport.form">Add a Scheduled Report</a>
 

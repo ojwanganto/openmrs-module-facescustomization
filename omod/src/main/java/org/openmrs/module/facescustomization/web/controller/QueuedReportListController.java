@@ -25,12 +25,12 @@ public class QueuedReportListController {
 
 	private static final Log log = LogFactory.getLog(QueuedReportListController.class);
 
-	@RequestMapping(method = RequestMethod.GET, value = "module/amrsreports/queuedReport.list")
+	@RequestMapping(method = RequestMethod.GET, value = "module/facescustomization/queuedReport.list")
 	public String preparePage() {
-		return "module/amrsreports/queuedReportList";
+		return "module/facescustomization/queuedReportList";
 	}
 
-	@RequestMapping(value = "/module/amrsreports/downloadxls")
+	@RequestMapping(value = "/module/facescustomization/downloadxls")
 	public void downloadXLS(HttpServletResponse response,
 	                        @RequestParam(required = true, value = "reportId") Integer reportId) throws IOException {
 

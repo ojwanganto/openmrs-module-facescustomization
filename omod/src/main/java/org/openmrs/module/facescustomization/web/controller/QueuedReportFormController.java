@@ -2,6 +2,7 @@ package org.openmrs.module.facescustomization.web.controller;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.openmrs.Location;
 import org.openmrs.api.APIException;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.facescustomization.QueuedReport;
@@ -34,9 +35,14 @@ public class QueuedReportFormController {
 
 	private final Log log = LogFactory.getLog(getClass());
 
-	private static final String FORM_VIEW = "module/amrsreports/queuedReportForm";
+	private static final String FORM_VIEW = "module/facescustomization/queuedReportForm";
 	private static final String SUCCESS_VIEW = "redirect:queuedReport.list";
 
+
+    @ModelAttribute("facilities")
+    public List<Location> getFacilities() {
+        return Context.getLocationService().getAllLocations(false);
+    }
 
 	@ModelAttribute("reportProviders")
 	public List<ReportProvider> getReportProviders() {
@@ -57,7 +63,7 @@ public class QueuedReportFormController {
 		return sdf.format(new Date());
 	}
 
-	@RequestMapping(method = RequestMethod.POST, value = "module/amrsreports/queuedReport.form")
+	@RequestMapping(method = RequestMethod.POST, value = "module/facescustomization/queuedReport.form")
 	public String processForm(HttpServletRequest request,
 							  @ModelAttribute("queuedReports") QueuedReport editedReport,
 							  BindingResult errors,
@@ -96,7 +102,7 @@ public class QueuedReportFormController {
 		return SUCCESS_VIEW;
 	}
 
-	@RequestMapping(method = RequestMethod.GET, value = "module/amrsreports/queuedReport.form")
+	@RequestMapping(method = RequestMethod.GET, value = "module/facescustomization/queuedReport.form")
 	public String editQueuedReport(
 			@RequestParam(value = "queuedReportId", required = false) Integer queuedReportId,
             @RequestParam(value = "status", required = false) String status,
@@ -114,7 +120,7 @@ public class QueuedReportFormController {
 			queuedReport = new QueuedReport();
 		}
 
-        if (status.equals("ERROR")) {
+        if (status != null && status.equals("ERROR")) {
             inlineInstruction = "Check the new scheduled date and submit when finished";
             queuedReport.setDateScheduled(new Date());/*
             queuedReport.setStatus(QueuedReport.STATUS_NEW);*/
@@ -145,7 +151,7 @@ public class QueuedReportFormController {
 		return FORM_VIEW;
 	}
 
-    @RequestMapping(method = RequestMethod.GET, value = "module/amrsreports/removeQueuedReport.form")
+    @RequestMapping(method = RequestMethod.GET, value = "module/facescustomization/removeQueuedReport.form")
     public String removeQueuedReport( HttpServletRequest request,
             @RequestParam(value = "queuedReportId", required = false) Integer queuedReportId,
             ModelMap modelMap

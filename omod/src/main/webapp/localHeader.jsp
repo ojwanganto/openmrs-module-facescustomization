@@ -1,7 +1,7 @@
 <openmrs:htmlInclude file="/dwr/util.js"/>
 <openmrs:htmlInclude file="/dwr/interface/DWRAmrsReportService.js"/>
 
-<openmrs:htmlInclude file="/moduleResources/amrsreports/css/amrsreports.css" />
+<openmrs:htmlInclude file="/moduleResources/facescustomization/css/amrsreports.css" />
 
 <script>
     $j(document).ready(function(){

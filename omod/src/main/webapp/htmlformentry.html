@@ -1,0 +1,473 @@
+<htmlform>
+<script type="text/javascript">
+
+    if(jQuery)
+    {
+        $j(document).ready(function() {
+
+            //Define concept variables
+
+            var EARLY_CONCEPT = 1912;
+            var LATE_CONCEPT = 1913;
+            var TRACED_CONCEPT = 1914;
+            var TRANSFER_IN_CONCEPT_ID = 1605;
+            var CURRENT_CHECKIN = 6851;
+            var BACK_ENTRY = 6850;
+            var SCHEDULE_CONCEPT=1493;
+            var TRIAGE_CONCEPT=1915;
+
+            var DISPLAYED_ENC_DATE_ONLOAD = $j("#enc_date").find("input[type='text']").val();
+            var HIDDEN_ENC_DATE_ONLOAD = $j("#enc_date").find("input[type='hidden']").val();
+
+            //adding disabled status to transfer facility on form load
+            getField("ti_facility.value").hide();
+
+            var early=$j('#early').find("input[value=" + EARLY_CONCEPT + "]");
+            var tca=$j('#tca').find('input[class=hasDatepicker]');
+
+            var late=$j('#late').find("input[value=" + LATE_CONCEPT + "]");
+            var traced=$j('#traced').find("input[value=" + TRACED_CONCEPT + "]");
+            traced.attr('disabled','true');
+            tca.attr('disabled','true');
+
+            getField('schedule.value').change(function(){
+                if(getValue('schedule.value')== SCHEDULE_CONCEPT)
+                {
+                    setValue('early.value', '');
+                    setValue('late.value', '');
+                    setValue('triage.value', '');
+                }
+            });
+
+            getField('early.value').change(function(){
+                if(getValue('early.value')== EARLY_CONCEPT)
+                {
+                    setValue('schedule.value', '');
+                    setValue('late.value', '');
+                    setValue('triage.value', '');
+                }
+            });
+
+            getField('late.value').change(function(){
+                if(getValue('late.value')== LATE_CONCEPT)
+                {
+                    setValue('schedule.value', '');
+                    setValue('early.value', '');
+                    setValue('triage.value', '');
+                }
+            });
+
+            getField('triage.value').change(function(){
+                if(getValue('triage.value')== TRIAGE_CONCEPT)
+                {
+                    setValue('schedule.value', '');
+                    setValue('early.value', '');
+                    setValue('late.value', '');
+                }
+            });
+
+            //show transfer facility when transfer in checkbox is ticked
+            $j('#transfer_in input').click(function(){
+
+                if(getValue('transfer_in.value') == TRANSFER_IN_CONCEPT_ID) {
+                    //$j('#transfer_details').show();
+                    getField("ti_facility.value").show();
+                }
+                else
+                {
+                    setValue('ti_facility.value', '');
+                    getField("ti_facility.value").hide();
+
+                }
+            });
+
+
+            late.click(function(){
+                if ((late.attr('checked')==true) || (early.attr('checked')==true))
+                {
+                    traced.removeAttr('disabled');
+                    tca.removeAttr('disabled');
+                }
+                else
+                {
+                    setValue('traced.value', '');
+                    traced.attr('disabled','true');
+
+                    setValue('traced.value', '');
+                    tca.attr('disabled','true');
+                    tca.attr('value','');
+                }
+            });
+
+            early.click(function(){
+                if ((late.attr('checked')==true) || (early.attr('checked')==true))
+                {
+                    traced.removeAttr('disabled');
+                    tca.removeAttr('disabled');
+                }
+                else
+                {
+                    setValue('traced.value', '');
+                    traced.attr('disabled','true');
+                    tca.attr('disabled','true');
+                    tca.attr('value','');
+                }
+            });
+
+            var checkoutDatepicker=$j('#checkoutStatus').find('input[class=hasDatepicker]');
+            checkoutDatepicker.attr('disabled','true');
+
+            var currentCheckIn=$j('#checkoutStatus').find("input[value=" + CURRENT_CHECKIN + "]");
+            currentCheckIn.click(function()
+            {
+                checkoutDatepicker.attr('disabled','true');
+                checkoutDatepicker.attr('value','');
+                $j('#checkoutStatus').find("input[type='hidden']").attr('value',"");
+                $j("#enc_date").find("input[type='text']").val(DISPLAYED_ENC_DATE_ONLOAD);
+                $j("#enc_date").find("input[type='hidden']").val(HIDDEN_ENC_DATE_ONLOAD);
+            });
+
+            /**
+             * Code to handle back entry checkbox
+             */
+            var backEntry=$j('#checkoutStatus').find("input[value=" + BACK_ENTRY + "]");
+
+            backEntry.click(function(){
+                if(backEntry.attr('checked')==false)
+                {
+                    checkoutDatepicker.attr('disabled','true');
+                    checkoutDatepicker.attr('value','');
+                    $j('#checkoutStatus').find("input[type='hidden']").attr('value',"");
+                    $j("#enc_date").find("input[type='text']").val(DISPLAYED_ENC_DATE_ONLOAD);
+                    $j("#enc_date").find("input[type='hidden']").val(HIDDEN_ENC_DATE_ONLOAD);
+
+                }
+                else
+                {
+                    checkoutDatepicker.removeAttr('disabled');
+                }
+            });
+
+            /**
+             * update encounter date to read as back data entry date
+             */
+
+
+            checkoutDatepicker.change(function(){
+               var encounterDate = getValue("enc_date.value");
+               var backEntryDisplayedDate = $j('#checkoutStatus').find("input[class='hasDatepicker']").attr('value');
+               var backEntryHiddenDate = $j('#checkoutStatus').find("input[type='hidden']").attr('value');
+
+               if (backEntryDisplayedDate != "" &amp;&amp; backEntryHiddenDate != "") {
+                   $j("#enc_date").find("input[type='text']").val(backEntryDisplayedDate);
+                   $j("#enc_date").find("input[type='hidden']").val(backEntryHiddenDate);
+
+               }
+            });
+
+            var Appointment_other=$j('#appointment_other').find('input[type=checkbox]');
+            var Appointment_specify=$j('#appointment_specify').find('input[type=text]');
+
+            Appointment_specify.attr('disabled','true');
+            Appointment_other.click(function(){
+                if(Appointment_other.attr('checked')==true)
+                {
+                    Appointment_specify.removeAttr('disabled');
+                }
+                else
+                {
+                    Appointment_specify.attr('disabled','true');
+                    Appointment_specify.attr('value','');
+                }
+            });
+
+            beforeSubmit.push(function(){//validate before submit
+                var valid=false;
+                if (backEntry.attr('checked')==true &amp;&amp; checkoutDatepicker.attr('value')=='')
+                {
+                    getField('checkoutStatus.error').html('Enter the backentry checkout Date').show();
+                    valid=false;
+                }
+
+                else if(Appointment_other.attr('checked')==true &amp;&amp; Appointment_specify.attr('value')=='')
+                {
+                    getField('appointment_specify.error').html("Specify the 'other' Next appointment reason").show();
+                    valid=false;
+                }
+               /* else if((getField('transfer_in.value').attr("checked"))){
+                    if(getValue("ti_facility.value")==""){
+                        getField('ti_facility.error').html("Specify Transfer-in facility").show();
+                        valid = false;
+                    }
+                }*/
+                else
+                {
+                    valid=true
+                }
+                return valid;
+            });
+
+        })
+    }
+
+</script>
+
+<style type="text/css">
+    #container {
+        width:800px;
+        margin-left:auto;
+        margin-right:auto;
+        margin-top:4px;
+        border:1px solid #B3B3B3;
+        padding:1px;
+    }
+    /*#container .header, .client, .schedule,.checkin_status,.appointment,.incomplete-appointment,.clinic{
+        border-bottom:1px solid #666666;
+    }*/
+
+    #container fieldset{
+        margin-bottom:3px;
+        border:1px solid #BFBFBF;
+    }
+    #container fieldset legend{
+        font-weight:normal;
+        font-size:16px;
+        background-color:#F2F2F2;
+        border:1px solid #BFBFBF;
+        color:#999999;
+    }
+
+    #container .clinic table td{
+        width:10%;
+        vertical-align:top;
+    }
+    #container .clinic table th{
+        text-align:left;
+        border:none;
+    }
+    #container .header{
+        margin-bottom:4px;
+    }
+
+    #container .header h2 {
+        text-align: center;
+        color:#8C8C8C;
+    }
+
+    #container .header-title{
+        background-color:#D9D9D9;
+        border:1px solid #BFBFBF;
+    }
+    #container .client{
+
+    }
+    #container .client td {
+        height: 20px;
+    }
+
+    #container fieldset table{
+        font-size:90%;
+        width:100%;
+    }
+
+    a:link {
+    }
+
+
+    .submit {
+        float: right;
+    }
+
+    .endofform {
+        background-color: #CCC;
+        text-align: right;
+        font-family: Verdana, Geneva, sans-serif;
+    }
+
+    .bold{
+        font-size:11px;
+        font-weight:bold;
+    }
+</style>
+
+<div id="container">
+    <div class="header">
+        <table width="100%" border="0" cellpadding="0" cellspacing="0">
+            <tr>
+                <td width="77%"><div class="header-title">
+                    <h2>Lumumba Check-In Form</h2>
+                </div></td>
+                <td width="23%"><div style="float:right">Date:
+                    <encounterDate id="enc_date" default="today"/>
+                </div></td>
+            </tr>
+
+        </table>
+    </div>
+    <div class="client">
+        <fieldset><legend>Patient Details</legend><table width="100%" border="0">
+            <tr>
+                <td width="6%">Name:  </td>
+                <td width="8%"><em>Family</em>: </td>
+                <td width="17%"><lookup class="bold" expression="patient.getFamilyName()"/></td>
+                <td width="10%">Patient Id: </td>
+                <td width="33%">
+                    <em>PSC ID</em>:
+                    <lookup class="bold" expression="patient.getPatientIdentifier(3)"/>			</td>
+                <td width="14%">Date Of Birth: </td>
+                <td width="12%"> Sex:</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><em>Given</em>: </td>
+                <td width="17%"><lookup class="bold" expression="patient.getGivenName()"/></td>
+                <td width="10%"></td>
+                <td width="33%"></td>
+                <td id="dob" ><lookup class="bold" expression="patient.getBirthdate()"/></td>
+                <td><lookup class="bold" complexExpression="#if ($patient.getGender()=='F') Female #else Male #end"/></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td valign="top"><em>Middle</em>:</td>
+                <td width="17%"><lookup class="bold" expression="patient.getMiddleName()"/></td>
+                <td width="10%"></td>
+                <td width="33%">	</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td valign="top"></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </table></fieldset>
+    </div>
+    <div class="checkin_status">
+        <fieldset><legend>Schedule Status</legend>
+            <table width="100%" border="0">
+                <tr>
+                    <td>
+                        <obs id="schedule" conceptId="1501" answerConceptId="1493" answerLabel="On Schedule" style="checkbox"/>  <br/>
+                        <obs id="triage" conceptId="1501" answerConceptId="1915" answerLabel="From Triage" style="checkbox"/>
+                    </td>
+                    <td>
+                        <obs id="early" conceptId="1501" answerConceptId="1912" answerLabel="Early Appointment" style="checkbox"/>  <br/>
+                        <obs id="late" conceptId="1501" answerConceptId="1913" answerLabel="Late Appointment" style="checkbox"/><br/>
+                        &#160; &#160; &#160;<obs id="traced" conceptId="1501" answerConceptId="1914" answerLabel="Traced" style="checkbox"/></td>
+                    <td>
+                        If early or late:<br/>Scheduled Appointment Date:<br/>
+                        <obs id="tca" conceptId="5096" allowFutureDates="true"/>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <obs id="transfer_in" conceptId="1501" answerConceptId="1605" answerLabel="Transfer In" style="checkbox"/>
+
+                    </td>
+                    <td colspan="2">
+                        Facility: &#160;&#160; <obs id="ti_facility" conceptId="1902"/>
+                    </td>
+
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table></fieldset>
+    </div>
+    <div class="checkin_status">
+        <fieldset><legend>Check-in Status</legend>
+            <table width="100%" border="0">
+                <tr>
+                    <td colspan="2">
+                        <obs id="checkoutStatus"  conceptId="6852" answerConceptIds="6851,6850" answerLabels="Current Check in?,Back Entry?" required="true" class="value1" style="radio" answerSeparator="&lt;br /&gt;" dateLabel="Please fill in time, if Back Entry"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table></fieldset>
+    </div>
+
+    <div class="appointment">
+        <fieldset>
+            <legend>Appointment Reason</legend>
+
+            <table width="100%">
+                <tr>
+                    <td colspan="1.5">
+                        <obs conceptId="1916" answerConceptId="1944" answerLabel="PSC Adult Enrollment" style="checkbox"/><br/>
+                        <obs conceptId="1916" answerConceptId="1945" answerLabel="PSC Pediatric Enrollment" style="checkbox"/><br/>
+                        <obs conceptId="1916" answerConceptId="1917" answerLabel="PMTCT Enrollment" style="checkbox"/><br/>
+                        <obs conceptId="1916" answerConceptId="7650" answerLabel="HEI Enrollment" style="checkbox"/><br/>
+                        <obs conceptId="1916" answerConceptId="7651" answerLabel="FHTC" style="checkbox"/><br/>
+                        <obs id="appointment_other" conceptId="1916" answerConceptId="5622" answerLabel="Other, specify:" style="checkbox"/>
+                    </td>
+
+                    <td>
+                        <obs conceptId="1916" answerConceptId="6846" answerLabel="PMTCT Follow Up" style="checkbox"/><br/>
+                        <obs conceptId="1916" answerConceptId="1918" answerLabel="Adherence 1" style="checkbox"/><br/>
+                        <obs conceptId="1916" answerConceptId="1919" answerLabel="Adherence 2" style="checkbox"/><br/>
+                        <obs conceptId="1916" answerConceptId="1920" answerLabel="Adherence 3" style="checkbox"/><br/>
+                        <obs conceptId="1916" answerConceptId="1921" answerLabel="Booster Adherence" style="checkbox"/>
+                    </td>
+
+                    <td>
+                        <obs conceptId="1916" answerConceptId="1942" answerLabel="PSC Follow Up" style="checkbox"/><br/>
+                        <obs conceptId="1916" answerConceptId="1922" answerLabel="Newly on ART - week 1" style="checkbox"/><br/>
+                        <obs conceptId="1916" answerConceptId="1923" answerLabel="Newly on ART - week 2" style="checkbox"/><br/>
+                        <obs conceptId="1916" answerConceptId="1924" answerLabel="Refill" style="checkbox"/><br/>
+                        <obs conceptId="1916" answerConceptId="5271" answerLabel="Family Planning" style="checkbox"/>
+                    </td>
+                    <td>
+                        <obs conceptId="1916" answerConceptId="1925" answerLabel=" PEP Enrollment" style="checkbox"/><br/>
+                        <obs conceptId="1916" answerConceptId="1926" answerLabel="PEP Follow up - 2 Weeks" style="checkbox"/><br/>
+                        <obs conceptId="1916" answerConceptId="1927" answerLabel="PEP Follow up - 28 Days - 28 Days" style="checkbox"/><br/>
+                        <obs conceptId="1916" answerConceptId="1928" answerLabel="PEP Final Test" style="checkbox"/><br/>
+                        <obs conceptId="1916" answerConceptId="1767" answerLabel="Defaulter Counseling" style="checkbox"/>
+                    </td>
+
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <obs id="appointment_specify" conceptId="1929" size="100"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <obs conceptId="1943" answerConceptId="1943" answerLabel="Unable to Complete Appointment" style="checkbox"/><br/>
+                        <obs conceptId="1930" answerConceptIds="1931,5622" answerLabels="Too Late,Other specify" answerSeparator="&lt;br /&gt;" style="radio"/>  <br/>
+                        <obs conceptId="1932" size="100"/></td>
+                </tr>
+            </table>
+        </fieldset>
+    </div>
+
+    <div>
+        <table style="width:100%">
+            <tr>
+                <td class="endofform">Location:
+                    <encounterLocation default="2"/>
+                    Provider:
+                    <encounterProvider default="currentUser"/>
+                </td>
+            </tr>
+            <!-- Submit button-->
+            <tr>
+                <td style="text-align:center;">
+                    <div class="ke-form-buttons">
+                        <submit />
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+</htmlform>

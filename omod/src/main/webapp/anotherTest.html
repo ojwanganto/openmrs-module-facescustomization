@@ -1,0 +1,83 @@
+<!--
+  ~ The contents of this file are subject to the OpenMRS Public License
+  ~ Version 1.0 (the "License"); you may not use this file except in
+  ~ compliance with the License. You may obtain a copy of the License at
+  ~ http://license.openmrs.org
+  ~
+  ~ Software distributed under the License is distributed on an "AS IS"
+  ~ basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+  ~ License for the specific language governing rights and limitations
+  ~ under the License.
+  ~
+  ~ Copyright (C) OpenMRS, LLC.  All Rights Reserved.
+  -->
+<htmlform>
+    <script type="text/javascript">
+        if(jQuery) {
+            $j(document).ready(function () {
+                $j("#transfer_details").hide();
+                 getField("ep_transfer_in.value").click(function(){
+                   if(getValue("ep_transfer_in.value") == 160563){
+                       $j("#transfer_details").show();
+                   }
+                   else {
+                       $j("#transfer_details").hide();
+                   }
+            });
+        });
+}
+    </script>
+    <table>
+        <tr>
+            <td rowspan="3">Entry Point</td>
+
+            <td><obs  id="ep_pmtct" conceptId="160540AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" answerConceptId="160538AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" answerLabel="PMTCT" style="checkbox"/></td>
+            <td><obs  id="ep_ipdAd" conceptId="160540AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" answerConceptId="160536AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" answerLabel="IPD-Ad" style="checkbox"/></td>
+            <td><obs  id="ep_tb" conceptId="160540AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" answerConceptId="160541AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" answerLabel="TB Clinic" style="checkbox"/></td>
+            <td><obs  id="ep_opd" conceptId="160540AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" answerConceptId="160542AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" answerLabel="OPD" style="checkbox"/></td>
+
+        </tr>
+        <tr>
+
+            <td><obs id="ep_vct" conceptId="160540AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" answerConceptId="160539AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" answerLabel="VCT" style="checkbox"/></td>
+            <td><obs id="ep_ipdCh" conceptId="160540AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" answerConceptId="160537AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" answerLabel="IPD-Ch" style="checkbox"/></td>
+            <td><obs id="ep_mch" conceptId="160540AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" answerConceptId="160544AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" answerLabel="MCH-Child" style="checkbox"/></td>
+            <td><obs id="ep_vmmc" conceptId="160540AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" answerConceptId="162223AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" answerLabel="VMMC" style="checkbox"/></td>
+
+        </tr>
+        <tr>
+
+            <td><obs id="ep_fm" conceptId="160540AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" answerConceptId="1560AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" answerLabel="Family Member" style="checkbox"/></td>
+            <td><obs id="ep_other" conceptId="160540AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" answerConceptId="5622AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" answerLabel="Other, (Specify e.g. (STI)" style="checkbox"/></td>
+            <td colspan="2">
+                <obs id="ep_transfer_in" conceptId="160540AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                     answerConceptId="160563AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                     answerLabel="Transfer in from Other HIV Clinic"
+                     style="checkbox">
+                     </obs>
+            </td>
+
+        </tr>
+        <tr>
+            <td> Transfer In:</td>
+            <td colspan="3">
+									<div id="transfer_details">
+										<table>
+                                            <tr>
+                                                <td>Date:</td>
+                                                <td><obs id="ti_date" conceptId="160534AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"/></td>
+                                                <td>From: District</td>
+                                                <td><obs id="ti_district" conceptId="161551AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"/></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Facility:</td>
+                                                <td><obs id="ti_facility" conceptId="160535AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"/></td>
+                                                <td>Date started ART</td>
+                                                <td><obs id="ti_date_started_haart" conceptId="159599AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"/></td>
+                                            </tr>
+                                        </table>
+									</div>
+            </td>
+        </tr>
+    </table>
+</htmlform>

@@ -4,12 +4,12 @@
 
 <openmrs:require privilege="Run Reports" otherwise="/login.htm" redirect="/module/amrsreports/queuedReport.form"/>
 
-<openmrs:htmlInclude file="/moduleResources/amrsreports/js/jquery-ui-timepicker-addon.min.js"/>
-<openmrs:htmlInclude file="/moduleResources/amrsreports/js/openmrs-1.9.js"/>
+<openmrs:htmlInclude file="/moduleResources/facescustomization/js/jquery-ui-timepicker-addon.min.js"/>
+<openmrs:htmlInclude file="/moduleResources/facescustomization/js/openmrs-1.9.js"/>
 
-<openmrs:htmlInclude file="/moduleResources/amrsreports/css/jquery-ui-timepicker-addon.css"/>
+<openmrs:htmlInclude file="/moduleResources/facescustomization/css/jquery-ui-timepicker-addon.css"/>
 
-<%@ include file="localHeader.jsp" %>
+<%@ include file="template/localHeader.jsp" %>
 
 
 <c:if test="${not empty queuedReports.queuedReportId}">
@@ -141,12 +141,11 @@
 
         <fieldset class="visualPadding">
             <legend>Location</legend>
-            <spring:bind path="queuedReports.facility.facilityId">
+            <spring:bind path="queuedReports.facility.id">
                 <select name="${status.expression}" id="facility" size="10">
                     <c:forEach var="facility" items="${facilities}">
                         <option
-                        <c:if test="${status.value==facility.facilityId}">selected</c:if> value="${facility.facilityId}">${facility.code}
-                        - ${facility.name} </option>
+                        <c:if test="${status.value==facility.id}">selected</c:if> value="${facility.id}">${facility.name} </option>
                     </c:forEach>
                 </select>
                 <c:if test="${status.error}">
