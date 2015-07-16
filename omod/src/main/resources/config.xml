@@ -30,9 +30,8 @@
 	
 	<!-- Maps hibernate file's, if present -->
 	<mappingFiles>
-				
 		FacesCustomization.hbm.xml
-				
+        QueuedReport.hbm.xml
 	</mappingFiles>
 
 

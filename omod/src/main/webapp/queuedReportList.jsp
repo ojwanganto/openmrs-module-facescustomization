@@ -62,16 +62,16 @@
 
 <br/>
 
-<openmrs:portlet id="queuedReports" moduleId="facescustomization" url="queuedReports"
+<openmrs:portlet id="queuedSystemReports" moduleId="facescustomization" url="queuedSystemReports"
                  parameters="status=NEW|title=Queued Reports"/>
 
-<openmrs:portlet id="queuedReports" moduleId="facescustomization" url="queuedReports"
+<openmrs:portlet id="queuedSystemReports" moduleId="facescustomization" url="queuedSystemReports"
                  parameters="status=RUNNING|title=Running Reports"/>
 
-<openmrs:portlet id="queuedReports" moduleId="facescustomization" url="queuedReports"
+<openmrs:portlet id="queuedSystemReports" moduleId="facescustomization" url="queuedSystemReports"
                  parameters="status=COMPLETE|title=Completed Reports"/>
 
-<openmrs:portlet id="queuedReports" moduleId="facescustomization" url="queuedReports"
+<openmrs:portlet id="queuedSystemReports" moduleId="facescustomization" url="queuedSystemReports"
                  parameters="status=ERROR|title=Reports in Error"/>
 
 <%@ include file="/WEB-INF/template/footer.jsp" %>

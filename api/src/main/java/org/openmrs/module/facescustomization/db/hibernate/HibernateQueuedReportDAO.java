@@ -1,5 +1,7 @@
 package org.openmrs.module.facescustomization.db.hibernate;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
@@ -17,6 +19,7 @@ import java.util.List;
 public class HibernateQueuedReportDAO implements QueuedReportDAO {
 
 	private SessionFactory sessionFactory;
+    private final Log log = LogFactory.getLog(this.getClass());
 
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
@@ -47,6 +50,7 @@ public class HibernateQueuedReportDAO implements QueuedReportDAO {
 
 	@Override
 	public List<QueuedReport> getAllQueuedReports() {
+        System.out.println("THIS IS TOOOOOOOOOOOOOOOOOOOOOOOTAL REPORTS");
 		return sessionFactory.getCurrentSession().createCriteria(QueuedReport.class)
 				.addOrder(Order.asc("dateScheduled"))
 				.list();
@@ -54,6 +58,7 @@ public class HibernateQueuedReportDAO implements QueuedReportDAO {
 
 	@Override
 	public List<QueuedReport> getQueuedReportsWithStatus(String status) {
+        System.out.println("THIS IS STAAAAAAAAAAAAAAAAAAAAAAAATUS " + status);
 		return sessionFactory.getCurrentSession().createCriteria(QueuedReport.class)
 				.add(Restrictions.eq("status", status))
 				.addOrder(Order.desc("dateScheduled"))
@@ -69,7 +74,7 @@ public class HibernateQueuedReportDAO implements QueuedReportDAO {
 	public List<QueuedReport> getQueuedReportsByFacilities(List<Location> facilities, String status) {
 		return sessionFactory.getCurrentSession().createCriteria(QueuedReport.class)
 				.add(Restrictions.eq("status", status))
-				.add(Restrictions.in("facility", facilities))
+				/*.add(Restrictions.in("facility", facilities))*/
 				.createAlias("facility", "f")
 				.addOrder(Order.asc("f.name"))
 				.addOrder(Order.desc("dateScheduled"))

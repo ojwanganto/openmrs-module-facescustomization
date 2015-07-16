@@ -17,6 +17,9 @@ package org.openmrs.module.facescustomization;
 import org.apache.commons.logging.Log; 
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.module.ModuleActivator;
+import org.openmrs.module.facescustomization.reporting.provider.KHQIFReportProvider;
+import org.openmrs.module.facescustomization.reporting.provider.MOH361AReportProvider;
+import org.openmrs.module.facescustomization.service.ReportProviderRegistrar;
 
 /**
  * This class contains the logic that is run every time this module is either started or stopped.
@@ -44,6 +47,8 @@ public class FacesCustomizationActivator implements ModuleActivator {
 	 */
 	public void willStart() {
 		log.info("Starting Faces Customization Module");
+        ReportProviderRegistrar.getInstance().registerReportProvider(new MOH361AReportProvider());
+        ReportProviderRegistrar.getInstance().registerReportProvider(new KHQIFReportProvider());
 	}
 	
 	/**

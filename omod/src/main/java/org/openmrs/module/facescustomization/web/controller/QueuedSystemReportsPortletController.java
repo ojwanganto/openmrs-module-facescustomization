@@ -19,9 +19,9 @@
 
 package org.openmrs.module.facescustomization.web.controller;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openmrs.Location;
-import org.openmrs.User;
-import org.openmrs.api.LocationService;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.facescustomization.QueuedReport;
 import org.openmrs.module.facescustomization.service.QueuedReportService;
@@ -37,13 +37,15 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequestMapping("**/queuedReports.portlet")
-public class QueuedReportsPortletController extends PortletController {
+@RequestMapping("**/queuedSystemReports.portlet")
+public class QueuedSystemReportsPortletController extends PortletController {
 
+    private final Log log = LogFactory.getLog(this.getClass());
 	/**
 	 * @see org.openmrs.web.controller.PortletController#populateModel(javax.servlet.http.HttpServletRequest,
 	 *      java.util.Map)
 	 */
+
 	@Override
 	protected void populateModel(HttpServletRequest request, Map<String, Object> model) {
 
@@ -53,21 +55,15 @@ public class QueuedReportsPortletController extends PortletController {
 
 		if (Context.isAuthenticated() && status != null) {
 
-			User currentUser = Context.getAuthenticatedUser();
-
-			List<Location> relevantFacilities = Context.getLocationService().getAllLocations();
-
-			List<QueuedReport> reports = Context.getService(QueuedReportService.class).getQueuedReportsByFacilities
-					(relevantFacilities, status);
+			List<QueuedReport> reports = Context.getService(QueuedReportService.class).getQueuedReportsWithStatus(status);
 
 			for (QueuedReport thisReport : reports) {
+				Location thisFacility = thisReport.getFacility();
 
-				Location thisMohFacility = thisReport.getFacility();
+				if (!queuedReportsMap.containsKey(thisFacility))
+					queuedReportsMap.put(thisFacility, new ArrayList<QueuedReport>());
 
-				if (!queuedReportsMap.containsKey(thisMohFacility))
-					queuedReportsMap.put(thisMohFacility, new ArrayList<QueuedReport>());
-
-				queuedReportsMap.get(thisMohFacility).add(thisReport);
+				queuedReportsMap.get(thisFacility).add(thisReport);
 			}
 		}
 

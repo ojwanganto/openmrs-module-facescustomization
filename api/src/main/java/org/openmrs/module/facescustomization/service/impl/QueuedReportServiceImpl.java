@@ -228,7 +228,7 @@ public class QueuedReportServiceImpl implements QueuedReportService {
 		List<MOHFacility> allowedFacilities = userFacilityService.getAllowedFacilitiesForUser(Context.getAuthenticatedUser());*/
 
 		//return dao.getQueuedReportsByFacilities(allowedFacilities, status);
-        return dao.getAllQueuedReports();
+        return dao.getQueuedReportsWithStatus(status);
 
 	}
 
