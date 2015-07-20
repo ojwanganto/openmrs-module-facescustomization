@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -41,7 +42,16 @@ public class QueuedReportFormController {
 
     @ModelAttribute("facilities")
     public List<Location> getFacilities() {
-        return Context.getLocationService().getAllLocations(false);
+        List<Location> testLocations = new ArrayList<Location>();
+        int counter =0;
+        for ( Location location: Context.getLocationService().getAllLocations(false)){
+            testLocations.add(location);
+            counter++;
+            if (counter == 100){
+                break;
+            }
+        }
+        return testLocations;
     }
 
 	@ModelAttribute("reportProviders")

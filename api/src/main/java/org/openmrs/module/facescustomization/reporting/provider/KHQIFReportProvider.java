@@ -5,6 +5,7 @@ import org.openmrs.Location;
 import org.openmrs.PatientIdentifier;
 import org.openmrs.api.APIException;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.facescustomization.FacesCustomReportsConstants;
 import org.openmrs.module.facescustomization.reporting.cohort.definition.Moh361ACohortDefinition;
 import org.openmrs.module.reporting.cohort.definition.CohortDefinition;
 import org.openmrs.module.reporting.data.converter.BirthdateConverter;
@@ -39,6 +40,7 @@ public class KHQIFReportProvider extends ReportProvider {
 	public KHQIFReportProvider() {
 		this.name = "KHQIF Report";
 		this.visible = true;
+        this.typeOfReport = FacesCustomReportsConstants.INDICATOR_REPORT;
 	}
 
 	@Override
@@ -49,7 +51,7 @@ public class KHQIFReportProvider extends ReportProvider {
 		//MohCoreService service = Context.getService(MohCoreService.class);
 
 		ReportDefinition report = new PeriodIndicatorReportDefinition();
-		report.setName("MOH 361A Report");
+		report.setName("KHQIF Indicator Report");
 
 		// set up the DSD
 		PatientDataSetDefinition dsd = new PatientDataSetDefinition();

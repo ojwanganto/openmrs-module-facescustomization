@@ -50,7 +50,6 @@ public class HibernateQueuedReportDAO implements QueuedReportDAO {
 
 	@Override
 	public List<QueuedReport> getAllQueuedReports() {
-        System.out.println("THIS IS TOOOOOOOOOOOOOOOOOOOOOOOTAL REPORTS");
 		return sessionFactory.getCurrentSession().createCriteria(QueuedReport.class)
 				.addOrder(Order.asc("dateScheduled"))
 				.list();
@@ -58,7 +57,6 @@ public class HibernateQueuedReportDAO implements QueuedReportDAO {
 
 	@Override
 	public List<QueuedReport> getQueuedReportsWithStatus(String status) {
-        System.out.println("THIS IS STAAAAAAAAAAAAAAAAAAAAAAAATUS " + status);
 		return sessionFactory.getCurrentSession().createCriteria(QueuedReport.class)
 				.add(Restrictions.eq("status", status))
 				.addOrder(Order.desc("dateScheduled"))

@@ -9,6 +9,6 @@ import org.openmrs.module.reporting.evaluation.caching.Caching;
  */
 @Caching(strategy = ConfigurationPropertyCachingStrategy.class)
 @Localized("reporting.MOH361ACohortDefinition")
-public class Moh361ACohortDefinition extends AMRSReportsCohortDefinition {
+public class Moh361ACohortDefinition extends ParentReportsCohortDefinition {
 
 }

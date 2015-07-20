@@ -23,4 +23,7 @@ public class FacesCustomReportsConstants {
 	public static final String SAVED_COHORT_UUID = "AMRSReportsTemporaryCohort000000000000";
 
 	public static final Integer DEFAULT_BATCH_SIZE = 1000;
+    public static final Integer INDICATOR_REPORT = 1;
+    public static final Integer COHORT_REPORT = 2;
+
 }

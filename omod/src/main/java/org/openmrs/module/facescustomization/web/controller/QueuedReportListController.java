@@ -27,21 +27,6 @@ import java.util.List;
 public class QueuedReportListController {
 
 	private static final Log log = LogFactory.getLog(QueuedReportListController.class);
-/*
-    @ModelAttribute("errorReports")
-    public Integer getErrorReports() {
-        return Context.getService(QueuedReportService.class).getQueuedReportsWithStatus("ERROR").size();
-    }
-
-    @ModelAttribute("newReports")
-    public Integer getNewReports() {
-        return Context.getService(QueuedReportService.class).getQueuedReportsWithStatus("NEW").size();
-    }
-
-    @ModelAttribute("completeReports")
-    public Integer getCompletedReports() {
-        return Context.getService(QueuedReportService.class).getQueuedReportsWithStatus("COMPLETE").size();
-    }*/
 
 	@RequestMapping(method = RequestMethod.GET, value = "module/facescustomization/queuedReport.list")
 	public String preparePage() {

@@ -6,7 +6,7 @@ import org.openmrs.api.APIException;
 import org.openmrs.scheduler.tasks.AbstractTask;
 
 /**
- * Abstract task for AMRS Reports tasks where we want only one to run at a time
+ * Abstract task for  Reports tasks where we want only one to run at a time
  */
 public abstract class FacesCustomReportsTask extends AbstractTask {
 
@@ -28,8 +28,8 @@ public abstract class FacesCustomReportsTask extends AbstractTask {
 		try {
 			this.doExecute();
 		} catch (Exception e) {
-			log.error("Error running AMRS reports task", e);
-			throw new APIException("Error running AMRS reports task", e);
+			log.error("Error running FacesCustom reports task", e);
+			throw new APIException("Error running FacesCustom reports task", e);
 		} finally {
 			if (!FacesCustomReportsCommonTaskLock.getInstance().releaseLock(this.getClass()))
 				log.error("Could not release lock.");

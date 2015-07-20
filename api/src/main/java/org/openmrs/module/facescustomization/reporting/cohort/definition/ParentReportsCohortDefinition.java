@@ -12,16 +12,16 @@ import org.openmrs.module.reporting.evaluation.caching.Caching;
  */
 @Caching(strategy = ConfigurationPropertyCachingStrategy.class)
 @Localized("reporting.AMRSReportsCohortDefinition")
-public class AMRSReportsCohortDefinition extends BaseCohortDefinition {
+public class ParentReportsCohortDefinition extends BaseCohortDefinition {
 
     @ConfigurationProperty
     private Location facility;
 
-    public AMRSReportsCohortDefinition() {
+    public ParentReportsCohortDefinition() {
         super();
     }
 
-    public AMRSReportsCohortDefinition(Location facility) {
+    public ParentReportsCohortDefinition(Location facility) {
         super();
         this.facility = facility;
     }

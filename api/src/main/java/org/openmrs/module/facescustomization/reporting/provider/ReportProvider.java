@@ -1,5 +1,6 @@
 package org.openmrs.module.facescustomization.reporting.provider;
 
+import org.openmrs.module.facescustomization.FacesCustomReportsConstants;
 import org.openmrs.module.reporting.cohort.definition.CohortDefinition;
 import org.openmrs.module.reporting.report.ReportDesign;
 import org.openmrs.module.reporting.report.definition.ReportDefinition;
@@ -11,6 +12,7 @@ public abstract class ReportProvider {
 
 	protected String name;
 	protected Boolean visible = false;
+    protected Integer typeOfReport = FacesCustomReportsConstants.COHORT_REPORT;
 	protected ReportDefinition reportDefinition;
 	protected CohortDefinition cohortDefinition;
 	protected ReportDesign reportDesign;
@@ -31,7 +33,15 @@ public abstract class ReportProvider {
 		this.visible = visible;
 	}
 
-	public ReportDefinition getReportDefinition() {
+    public Integer getTypeOfReport() {
+        return typeOfReport;
+    }
+
+    public void setTypeOfReport(Integer typeOfReport) {
+        this.typeOfReport = typeOfReport;
+    }
+
+    public ReportDefinition getReportDefinition() {
 		return reportDefinition;
 	}
 

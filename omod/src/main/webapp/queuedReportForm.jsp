@@ -141,11 +141,11 @@
 
         <fieldset class="visualPadding">
             <legend>Location</legend>
-            <spring:bind path="queuedReports.facility.id">
+            <spring:bind path="queuedReports.facility.locationId">
                 <select name="${status.expression}" id="facility" size="10">
                     <c:forEach var="facility" items="${facilities}">
                         <option
-                        <c:if test="${status.value==facility.id}">selected</c:if> value="${facility.id}">${facility.name} </option>
+                        <c:if test="${status.value==facility.locationId}">selected</c:if> value="${facility.locationId}">${facility.name} </option>
                     </c:forEach>
                 </select>
                 <c:if test="${status.error}">

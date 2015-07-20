@@ -66,9 +66,17 @@
 
                             <span class="evaluationDate">as of <openmrs:formatDate date="${r.evaluationDate}"
                                                                                    type="textbox"/></span>
+                            <c:choose>
+                                <c:when test="${model.status == 'COMPLETE' || model.status == 'ERROR' || model.status == 'RUNNING'}">
+                                    <span class="scheduledDate">ran on <openmrs:formatDate date="${r.dateScheduled}"
+                                                                                           format="${model.datetimeFormat}"/></span>
+                                </c:when>
+                                <c:otherwise>
+                                    <span class="scheduledDate">run on <openmrs:formatDate date="${r.dateScheduled}"
+                                                                                           format="${model.datetimeFormat}"/></span>
+                                </c:otherwise>
+                            </c:choose>
 
-                            <span class="scheduledDate">ran on <openmrs:formatDate date="${r.dateScheduled}"
-                                                                                   format="${model.datetimeFormat}"/></span>
                         </div>
                     </c:forEach>
 
