@@ -59,6 +59,7 @@
 <%@ include file="template/localHeader.jsp" %>
 
 <a href="queuedReport.form">Add a Scheduled Report</a>
+<a href="adhocReport.form">Ad-hoc Reports</a>
 
 <br/>
 

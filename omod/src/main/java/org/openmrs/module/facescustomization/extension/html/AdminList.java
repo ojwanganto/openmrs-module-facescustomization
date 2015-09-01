@@ -50,6 +50,7 @@ public class AdminList extends AdministrationSectionExt {
 		map.put("/module/facescustomization/manage.form", "facescustomization.manage");
         map.put("/module/facescustomization/syncStatus.list", "facescustomization.syncStatus");
         map.put("module/facescustomization/queuedReport.list", "Manage Facility Reports");
+        map.put("/module/facescustomization/flatTable.form", "Manage Flat Tables");
 		return map;
 	}
    /* public Map<String, String> getLinks() {

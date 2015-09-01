@@ -95,5 +95,239 @@
         </addColumn>
     </changeSet>
 
+    <!--creating flat tables for reporting -->
+
+    <!--Creating table to contain static information-->
+    <changeSet id="facescustomization-pt-static-info" author="aojwang">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="facescustomization_pt_reg"/>
+            </not>
+        </preConditions>
+        <comment>
+            Creating the facescustomization_pt_reg table for containing static information about patient
+        </comment>
+        <createTable tableName="facescustomization_pt_reg">
+            <column name="facescustomization_pt_reg_id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="patient_id" type="int">
+                <constraints nullable="false" unique="true" />
+            </column>
+            <column name="patient_upn" type="varchar(12)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="patient_faces_id" type="varchar(15)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="patient_name" type="varchar(50)">
+                <constraints nullable="false" />
+            </column>
+            <column name="patient_dob" type="datetime">
+                <constraints nullable="false" />
+            </column>
+            <column name="patient_telephone_contact" type="varchar(14)">
+                <constraints nullable="true" />
+            </column>
+            <column name="patient_sex" type="varchar(10)">
+                <constraints nullable="false" />
+            </column>
+            <column name="date_enrolled_in_care" type="datetime">
+                <constraints nullable="false" />
+            </column>
+            <column name="date_art_started" type="datetime">
+                <constraints nullable="true" />
+            </column>
+            <column name="patient_entry_point" type="varchar(20)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="patient_weight_at_start" type="decimal(2,2)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="patient_height_at_start" type="decimal(2,2)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="patient_original_regimen" type="varchar(40)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="patient_enrolment_location" type="int">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="uuid" type="char(38)">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+
+        <createIndex tableName="facescustomization_pt_reg" indexName="patient_id">
+            <column name="patient_id" />
+        </createIndex>
+
+        <createIndex tableName="facescustomization_pt_reg" indexName="patient_upn">
+            <column name="patient_upn" />
+        </createIndex>
+        <createIndex tableName="facescustomization_pt_reg" indexName="patient_faces_id">
+            <column name="patient_faces_id" />
+        </createIndex>
+
+        <addForeignKeyConstraint constraintName="facescustomization_pt_reg_location"
+                                 baseTableName="facescustomization_pt_reg" baseColumnNames="patient_enrolment_location"
+                                 referencedTableName="location" referencedColumnNames="location_id"
+                />
+
+    </changeSet>
+
+    <changeSet id="facescustomization_pt_reg_patient_link" author="aojwang">
+        <preConditions onFail="MARK_RAN">
+            <and>
+                <columnExists tableName="facescustomization_pt_reg" columnName="patient_id"/>
+                <not>
+                    <foreignKeyConstraintExists foreignKeyName="facescustomization_pt_reg_person_ref"/>
+                </not>
+            </and>
+        </preConditions>
+        <comment>
+            Adding facescustomization_pt_reg foreign-key constraint on patient_id column
+        </comment>
+        <addForeignKeyConstraint
+                constraintName="facescustomization_pt_reg_person_ref"
+                baseTableName="facescustomization_pt_reg"
+                baseColumnNames="patient_id"
+                referencedTableName="patient"
+                referencedColumnNames="patient_id"
+                />
+    </changeSet>
+
+    <!--Adding flat table to store encounter hiv information-->
+
+    <changeSet id="facescustomization-pt-hiv-visit-info" author="aojwang">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="facescustomization_hiv_info"/>
+            </not>
+        </preConditions>
+        <comment>
+            Creating the facescustomization_hiv_info table for containing patient hiv information
+        </comment>
+        <createTable tableName="facescustomization_hiv_info">
+            <column name="facescustomization_hiv_info_id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="encounter_id" type="int">
+                <constraints nullable="false" />
+            </column>
+            <column name="visit_id" type="int">
+                <constraints nullable="false" />
+            </column>
+            <column name="encounter_location_id" type="int">
+                <constraints nullable="false" />
+            </column>
+            <column name="patient_id" type="int">
+                <constraints nullable="false" />
+            </column>
+            <column name="encounter_date" type="datetime">
+                <constraints nullable="false" />
+            </column>
+            <column name="cd4_result" type="int">
+                <constraints nullable="true" />
+            </column>
+            <column name="cd4_request_date" type="datetime">
+                <constraints nullable="true" />
+            </column>
+            <column name="cd4_result_date" type="datetime">
+                <constraints nullable="true" />
+            </column>
+            <column name="exit_care" type="int">
+                <constraints nullable="true" />
+            </column>
+            <column name="vl_result" type="int">
+                <constraints nullable="true" />
+            </column>
+            <column name="vl_request_date" type="datetime">
+                <constraints nullable="true" />
+            </column>
+            <column name="vl_result_date" type="datetime">
+                <constraints nullable="true" />
+            </column>
+            <column name="who_stage" type="varchar(5)">
+                <constraints nullable="true" />
+            </column>
+            <column name="dead" type="int">
+                <constraints nullable="true" />
+            </column>
+            <column name="date_of_death" type="datetime">
+                <constraints nullable="true" />
+            </column>
+            <column name="cause_of_death" type="varchar(30)">
+                <constraints nullable="true" />
+            </column>
+            <column name="lftu" type="int">
+                <constraints nullable="true" />
+            </column>
+            <column name="ti" type="int">
+                <constraints nullable="true" />
+            </column>
+            <column name="ti_date" type="datetime">
+                <constraints nullable="true"/>
+            </column>
+            <column name="ti_facility" type="varchar(20)">
+                <constraints nullable="true" />
+            </column>
+            <column name="to" type="int">
+                <constraints nullable="true" />
+            </column>
+            <column name="to_date" type="datetime">
+                <constraints nullable="true"/>
+            </column>
+            <column name="to_facility" type="varchar(20)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="regimen_changed" type="int">
+                <constraints nullable="true"/>
+            </column>
+            <column name="regimen" type="varchar(30)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="regimen_change_reason" type="varchar(40)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="next_visit_date" type="datetime">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="uuid" type="char(38)">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+
+        <createIndex tableName="facescustomization_hiv_info" indexName="facescustomization_hiv_infopatient_id_index">
+            <column name="patient_id" />
+        </createIndex>
+
+        <createIndex tableName="facescustomization_hiv_info" indexName="facescustomization_hiv_info_enc_location_index">
+            <column name="encounter_id" />
+        </createIndex>
+
+        <addForeignKeyConstraint constraintName="facescustomization_hiv_info_visit_ref"
+                                 baseTableName="facescustomization_hiv_info" baseColumnNames="visit_id"
+                                 referencedTableName="visit" referencedColumnNames="visit_id"
+                />
+        <addForeignKeyConstraint constraintName="facescustomization_hiv_info_visit_loc_ref"
+                                 baseTableName="facescustomization_hiv_info" baseColumnNames="encounter_location_id"
+                                 referencedTableName="location" referencedColumnNames="location_id"
+                />
+        <addForeignKeyConstraint constraintName="facescustomization_hiv_patient_ref"
+                                 baseTableName="facescustomization_hiv_info" baseColumnNames="patient_id"
+                                 referencedTableName="patient" referencedColumnNames="patient_id"
+                />
+
+    </changeSet>
+
+    <!--Adding flat table to store visit tb information-->
+
+    <!--Adding flat table to store pregnancy information-->
+
+
 
 </databaseChangeLog>
